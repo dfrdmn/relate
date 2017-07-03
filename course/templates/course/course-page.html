@@ -1,5 +1,5 @@
 {% extends "course/static-page.html" %}
-{% load i18n %}
+{% load crispy_forms_tags i18n %}
 
 {% block page_content_advisories %}
   {% if course.hidden %}
@@ -20,12 +20,17 @@
 
     {% if show_enroll_button %}
       <div class="well">
+        You need to purchase access to {{ pctx.course.name }} before you can continue:
+        {% crispy stripe_form %}
+
+        {% comment %}
         <form method="POST" action="{% url "relate-enroll" course.identifier %}">
           {% csrf_token %}
           <button type="submit" name="enroll" class="btn-lg btn-primary">
             {% trans "Enroll" %}&nbsp;&raquo;
           </button>
         </form>
+        {% endcomment %}
       </div>
     {% endif %}
 

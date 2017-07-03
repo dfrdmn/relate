@@ -179,12 +179,14 @@ def enroll_view(request, course_identifier):
                 _("Course is not accepting enrollments."))
         return redirect("relate-course_page", course_identifier)
 
-    if request.method != "POST":
-        # This can happen if someone tries to refresh the page, or switches to
-        # desktop view on mobile.
-        messages.add_message(request, messages.ERROR,
-                _("Can only enroll using POST request"))
-        return redirect("relate-course_page", course_identifier)
+    # Removed to allow Stripe payments to leverage this function and call it
+    # from Python.
+    # if request.method != "POST":
+    #     # This can happen if someone tries to refresh the page, or switches to
+    #     # desktop view on mobile.
+    #     messages.add_message(request, messages.ERROR,
+    #             _("Can only enroll using POST request"))
+    #     return redirect("relate-course_page", course_identifier)
 
     user = request.user
     if (course.enrollment_required_email_suffix

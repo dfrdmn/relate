@@ -81,6 +81,8 @@ from course.utils import (  # noqa
         render_course_page,
         CoursePageContext)
 
+from payment.forms import StripeForm
+
 # {{{ for mypy
 
 if False:
@@ -176,6 +178,23 @@ def course_page(pctx):
             pctx.course.accepts_enrollment
             and pctx.participation is None)
 
+    if pctx.request.method == 'POST':
+        form = StripeForm(pctx.request.POST, pctx=pctx)
+        if form.is_valid():
+            charge_successful, message = form.charge_card()
+            if charge_successful:
+                messages.add_message(pctx.request, messages.SUCCESS,
+                                     _("Payment was successful."))
+                from course.models import ParticipationPreapproval
+                preapproval = ParticipationPreapproval.objects.get_or_create(
+                    email=pctx.request.user.email, course=pctx.course)[0]
+                preapproval.roles.add(preapproval.roles.model.objects.get(
+                    course=preapproval.course, is_default_for_new_participants=True))
+                return redirect("relate-enroll", pctx.course.identifier)
+            else:
+                messages.add_message(pctx.request, messages.ERROR, message)
+
+
     if pctx.request.user.is_authenticated and Participation.objects.filter(
             user=pctx.request.user,
             course=pctx.course,
@@ -216,6 +235,8 @@ def course_page(pctx):
     return render_course_page(pctx, "course/course-page.html", {
         "chunks": chunks,
         "show_enroll_button": show_enroll_button,
+        "stripe_form": StripeForm(pctx=pctx),
+        "pctx": pctx
         })
 
 
@@ -236,7 +257,7 @@ def static_page(pctx, page_path):
 
     return render_course_page(pctx, "course/static-page.html", {
         "chunks": chunks,
-        "show_enroll_button": False,
+        "show_enroll_button": False
         })
 
 # }}}
