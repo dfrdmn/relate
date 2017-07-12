@@ -169,14 +169,17 @@ def course_page(pctx):
     from course.content import get_processed_page_chunks, get_course_desc
     page_desc = get_course_desc(pctx.repo, pctx.course, pctx.course_commit_sha)
 
-    chunks = get_processed_page_chunks(
-            pctx.course, pctx.repo, pctx.course_commit_sha, page_desc,
-            pctx.role_identifiers(), get_now_or_fake_time(pctx.request),
-            facilities=pctx.request.relate_facilities)
-
     show_enroll_button = (
             pctx.course.accepts_enrollment
             and pctx.participation is None)
+
+    if show_enroll_button:
+        chunks = None
+    else:
+        chunks = get_processed_page_chunks(
+                pctx.course, pctx.repo, pctx.course_commit_sha, page_desc,
+                pctx.role_identifiers(), get_now_or_fake_time(pctx.request),
+                facilities=pctx.request.relate_facilities)
 
     if pctx.request.method == 'POST':
         form = StripeForm(pctx.request.POST, pctx=pctx)
