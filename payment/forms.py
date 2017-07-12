@@ -39,8 +39,8 @@ class StripeForm(forms.Form):
     data-locale="auto"
     data-zip-code="true"
     data-allow-remember-me="false">
-</script>'''.format(settings.STRIPE_PUBLIC_KEY, settings.COURSE_PRICE,
-                    pctx.course.name, pctx.request.user.email)))
+</script>'''.format(settings.STRIPE_PUBLIC_KEY, settings.COURSE_PRICE, pctx.course.name,
+                    pctx.request.user.email if not pctx.request.user.is_anonymous() else '')))
 
     def charge_card(self):
         """Helper function to actually make the charge to Stripe."""
