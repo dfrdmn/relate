@@ -351,7 +351,8 @@ def send_enrollment_decision(participation, approved, request=None):
             "user": participation.user,
             "approved": approved,
             "course": course,
-            "course_uri": course_uri
+            "course_uri": course_uri,
+            "site_name": request.site.name
             })
 
         from django.core.mail import EmailMessage

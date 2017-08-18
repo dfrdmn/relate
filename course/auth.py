@@ -39,7 +39,6 @@ from django.contrib.auth import (get_user_model, REDIRECT_FIELD_NAME,
         login as auth_login, logout as auth_logout)
 from django.contrib.auth.forms import \
         AuthenticationForm as AuthenticationFormBase
-from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth.decorators import user_passes_test
 from django.urls import reverse
 from django.contrib.auth.validators import ASCIIUsernameValidator
@@ -377,8 +376,6 @@ def sign_in_by_user_pw(request, redirect_field_name=REDIRECT_FIELD_NAME):
     else:
         form = LoginForm(request)
 
-    current_site = get_current_site(request)
-
     next_uri = ""
     if redirect_to:
         next_uri = "?%s=%s" % (redirect_field_name, redirect_to)
@@ -386,8 +383,8 @@ def sign_in_by_user_pw(request, redirect_field_name=REDIRECT_FIELD_NAME):
     context = {
         'form': form,
         redirect_field_name: redirect_to,
-        'site': current_site,
-        'site_name': current_site.name,
+        'site': request.site,
+        'site_name': request.site.name,
         'next_uri': next_uri,
     }
 
@@ -456,7 +453,8 @@ def sign_up(request):
                             args=(user.id, user.sign_in_key,))
                         + "?to_profile=1"),
                     "home_uri": request.build_absolute_uri(
-                        reverse("relate-home"))
+                        reverse("relate-home")),
+                    "site_name": request.site.name
                     })
 
                 from django.core.mail import EmailMessage
@@ -612,7 +610,7 @@ def reset_password(request, field="email"):
         "field": field,
         "form_description":
             _("Password reset on %(site_name)s")
-            % {"site_name": _("RELATE")},
+            % {"site_name": _(request.site.name)},
         "form": form
         })
 
@@ -689,7 +687,7 @@ def reset_password_stage2(request, user_id, sign_in_key):
     return render(request, "generic-form.html", {
         "form_description":
             _("Password reset on %(site_name)s")
-            % {"site_name": _("RELATE")},
+            % {"site_name": _(request.site.name)},
         "form": form
         })
 
@@ -741,11 +739,12 @@ def sign_in_by_email(request):
                     reverse(
                         "relate-sign_in_stage2_with_token",
                         args=(user.id, user.sign_in_key,))),
-                "home_uri": request.build_absolute_uri(reverse("relate-home"))
+                "home_uri": request.build_absolute_uri(reverse("relate-home")),
+                "site_name": request.site.name
                 })
             from django.core.mail import EmailMessage
             msg = EmailMessage(
-                    _("Your %(RELATE)s sign-in link") % {"RELATE": _("RELATE")},
+                    _("Your %(site_name)s sign-in link") % {"site_name": _(request.site.name)},
                     message,
                     getattr(settings, "NO_REPLY_EMAIL_FROM",
                             settings.ROBOT_EMAIL_FROM),

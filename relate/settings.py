@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
+    "django.contrib.sites",
     "django.contrib.staticfiles",
     "crispy_forms",
     "jsonfield",
@@ -72,6 +73,7 @@ MIDDLEWARE = (
     "django.contrib.auth.middleware.SessionAuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "django.contrib.sites.middleware.CurrentSiteMiddleware",
     "course.auth.ImpersonateMiddleware",
     "course.utils.FacilityFindingMiddleware",
     "course.exam.ExamFacilityMiddleware",
@@ -127,6 +129,7 @@ BOWER_INSTALLED_APPS = (
 CODEMIRROR_PATH = "codemirror"
 
 # }}}
+SITE_ID = 1
 
 ROOT_URLCONF = 'relate.urls'
 
