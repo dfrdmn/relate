@@ -50,6 +50,7 @@ from course.content import (  # noqa
         FlowPageDesc,
         FlowSessionAccessRuleDesc
         )
+from course.models import Participation
 from course.page.base import (  # noqa
         PageBase,
         PageContext,
