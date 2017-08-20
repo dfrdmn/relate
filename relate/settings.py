@@ -124,6 +124,7 @@ BOWER_INSTALLED_APPS = (
     "jstree#3.2.1",
     "select2#4.0.1",
     "select2-bootstrap-css",
+    "blueimp-tmpl",
     )
 
 CODEMIRROR_PATH = "codemirror"
@@ -237,6 +238,10 @@ RELATE_CACHE_MAX_BYTES = 32768
 RELATE_ADMIN_EMAIL_LOCALE = "en_US"
 
 RELATE_EDITABLE_INST_ID_BEFORE_VERIFICATION = True
+
+RELATE_SIGN_IN_BY_USERNAME_ENABLED = True
+RELATE_SHOW_INST_ID_FORM = True
+RELATE_SHOW_EDITOR_FORM = True
 
 # }}}
 

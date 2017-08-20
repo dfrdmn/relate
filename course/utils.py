@@ -34,10 +34,11 @@ from django.shortcuts import (  # noqa
 from django import http
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils.translation import (
-        ugettext as _, string_concat, pgettext_lazy)
+        ugettext as _, pgettext_lazy)
 
 from codemirror import CodeMirrorTextarea, CodeMirrorJavascript
 
+from relate.utils import string_concat
 from course.content import (
         get_course_repo, get_flow_desc,
         parse_date_spec, get_course_commit_sha)
@@ -209,15 +210,17 @@ def _eval_participation_tags_conditions(
         ):
     # type: (...) -> bool
 
-    if not participation:
-        return False
-
     participation_tags_any_set = (
         set(getattr(rule, "if_has_participation_tags_any", [])))
     participation_tags_all_set = (
         set(getattr(rule, "if_has_participation_tags_all", [])))
 
     if participation_tags_any_set or participation_tags_all_set:
+        if not participation:
+            # Return False for anonymous users if only
+            # if_has_participation_tags_any or if_has_participation_tags_all
+            # is not empty.
+            return False
         ptag_set = set(participation.tags.all().values_list("name", flat=True))
         if not ptag_set:
             return False
