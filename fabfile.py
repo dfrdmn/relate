@@ -12,7 +12,13 @@ def deploy():
     with cd(code_dir), prefix('. /usr/local/bin/virtualenvwrapper.sh; workon relate'):
         git_pull()
         migrate()
+        collectstatic()
         reload()
+
+
+def collectstatic():
+    """Move static files."""
+    run("./manage.py collectstatic -v0 --noinput")
 
 
 def git_pull():
