@@ -21,3 +21,7 @@ saml_config.py
 *.pem
 
 git-roots
+
+# IDEs, etc.
+*.sublime-project
+*.sublime-workspace
