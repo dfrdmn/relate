@@ -70,6 +70,7 @@ from course.models import (
         Course,
         InstantFlowRequest,
         Participation,
+        ParticipationPreapproval,
         FlowSession,
         FlowRuleException)
 
@@ -187,7 +188,6 @@ def course_page(pctx):
             if charge_successful:
                 messages.add_message(pctx.request, messages.SUCCESS,
                                      _("Payment was successful."))
-                from course.models import ParticipationPreapproval
                 preapproval = ParticipationPreapproval.objects.get_or_create(
                     email=pctx.request.user.email, course=pctx.course)[0]
                 preapproval.roles.add(preapproval.roles.model.objects.get(
@@ -206,8 +206,6 @@ def course_page(pctx):
         messages.add_message(pctx.request, messages.INFO,
                 _("Your enrollment request is pending. You will be "
                 "notified once it has been acted upon."))
-
-        from course.models import ParticipationPreapproval
 
         if ParticipationPreapproval.objects.filter(
                 course=pctx.course).exclude(institutional_id=None).count():
@@ -233,6 +231,10 @@ def course_page(pctx):
                             "preapproved. Please contact your course "
                             "staff.")
                             )
+    elif pctx.request.user.is_authenticated and ParticipationPreapproval.objects.filter(
+            course=pctx.course, email__iexact=pctx.request.user.email).exists() and \
+            pctx.participation is None:
+        return redirect("relate-enroll", pctx.course.identifier)
 
     return render_course_page(pctx, "course/course-page.html", {
         "chunks": chunks,
