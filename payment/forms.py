@@ -35,6 +35,7 @@ class StripeForm(forms.Form):
     data-name="{}"
     data-description="Lab manual fee"
     data-email="{}"
+    data-image="http://res.cloudinary.com/dfrdmn/image/upload/v1503508323/noun_1121773_cc_b3zhzh.png"
     data-locale="auto"
     data-zip-code="true"
     data-allow-remember-me="false">
