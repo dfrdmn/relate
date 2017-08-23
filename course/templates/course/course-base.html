@@ -25,7 +25,7 @@
   {% block page_navbar %}
   {% endblock %}
 
-  {% if not relate_exam_lockdown and pperm.view_calendar %}
+  {% if not relate_exam_lockdown and pperm.view_calendar and participation.get_role_desc == 'Student' %}
   <li class="dropdown">
     {% comment %} Translators: The following are names for menu items in course page {% endcomment %}
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">{% trans "Student" context "menu item" %}<b class="caret"></b></a>
