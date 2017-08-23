@@ -35,7 +35,6 @@ class StripeForm(forms.Form):
     data-name="{}"
     data-description="Lab manual fee"
     data-email="{}"
-    data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
     data-locale="auto"
     data-zip-code="true"
     data-allow-remember-me="false">
