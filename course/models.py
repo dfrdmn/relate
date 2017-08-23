@@ -571,8 +571,8 @@ def add_default_roles_and_permissions(course,
         add_unenrolled_permissions(role)
 
     def add_teaching_assistant_permissions(role):
-        rpm(role=role, permission=pp.impersonate_role,
-                argument="student").save()
+        # rpm(role=role, permission=pp.impersonate_role,
+        #         argument="student").save()
         rpm(role=role, permission=pp.set_fake_time).save()
         rpm(role=role, permission=pp.set_pretend_facility).save()
         rpm(role=role, permission=pp.view_hidden_course_page).save()
@@ -597,15 +597,15 @@ def add_default_roles_and_permissions(course,
         rpm(role=role, permission=pp.recalculate_flow_session_grade).save()
 
         rpm(role=role, permission=pp.reopen_flow_session).save()
-        rpm(role=role, permission=pp.grant_exception).save()
+        # rpm(role=role, permission=pp.grant_exception).save()
         rpm(role=role, permission=pp.view_analytics).save()
 
-        rpm(role=role, permission=pp.preview_content).save()
-        rpm(role=role, permission=pp.use_markup_sandbox).save()
-        rpm(role=role, permission=pp.use_page_sandbox).save()
-        rpm(role=role, permission=pp.test_flow).save()
-        rpm(role=role, permission=pp.query_participation).save()
-        rpm(role=role, permission=pp.edit_participation).save()
+        # rpm(role=role, permission=pp.preview_content).save()
+        # rpm(role=role, permission=pp.use_markup_sandbox).save()
+        # rpm(role=role, permission=pp.use_page_sandbox).save()
+        # rpm(role=role, permission=pp.test_flow).save()
+        # rpm(role=role, permission=pp.query_participation).save()
+        # rpm(role=role, permission=pp.edit_participation).save()
 
         add_student_permissions(role)
 
