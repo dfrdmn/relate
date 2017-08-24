@@ -32,7 +32,7 @@ pytz
 pyyaml
 
 # dulwich
-dulwich>=0.17.3
+dulwich>=0.18.2
 ecdsa
 paramiko
 
@@ -108,6 +108,9 @@ pytools
 
 # For mypy (static type checking) support
 typing
+
+# For unittest by mock (only required for Py2)
+# mock
 
 # vim: foldmethod=marker
 
