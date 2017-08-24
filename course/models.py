@@ -637,6 +637,14 @@ def add_default_roles_and_permissions(course,
         rpm(role=role, permission=pp.manage_instant_flow_requests).save()
         rpm(role=role, permission=pp.preapprove_participation).save()
 
+        # Moved from TA
+        rpm(role=role, permission=pp.preview_content).save()
+        rpm(role=role, permission=pp.use_markup_sandbox).save()
+        rpm(role=role, permission=pp.use_page_sandbox).save()
+        rpm(role=role, permission=pp.test_flow).save()
+        rpm(role=role, permission=pp.query_participation).save()
+        rpm(role=role, permission=pp.edit_participation).save()
+
         add_teaching_assistant_permissions(role)
 
     instructor = role_model(
