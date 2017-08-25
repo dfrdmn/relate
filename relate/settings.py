@@ -57,6 +57,9 @@ INSTALLED_APPS = (
     "course",
 )
 
+if 'ADDITIONAL_APPS' in local_settings:
+    INSTALLED_APPS = INSTALLED_APPS + local_settings['ADDITIONAL_APPS']
+
 if local_settings["RELATE_SIGN_IN_BY_SAML2_ENABLED"]:
     INSTALLED_APPS = INSTALLED_APPS + ("djangosaml2",)  # type: ignore
 
