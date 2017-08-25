@@ -14,7 +14,7 @@
     {% if not pperm.view_participant_masked_profile %}
         <th class="datacol">{% trans "Name" context "real name of a user" %}</th>
     {% endif %}
-    <th class="datacol">{% trans "Role" %}</th>
+    {% comment %}<th class="datacol">{% trans "Role" %}</th>{% endcomment %}
     {% if not pperm.view_participant_masked_profile %}
         <th class="datacol">{% trans "Institutional ID" %}</th>
     {% endif %}
@@ -42,7 +42,7 @@
       {% if not pperm.view_participant_masked_profile %}
         <td class="datacol"><span class="sensitive">{{ participation.user.get_full_name }}</span></td>
       {% endif %}
-      <td class="datacol">{{ participation.get_role_desc }}</td>
+      {% comment %}<td class="datacol">{{ participation.get_role_desc }}</td>{% endcomment %}
       {% if not pperm.view_participant_masked_profile %}
         <td class="datacol"><span class="sensitive">{{ participation.user.institutional_id }}</span></td>
       {% endif %}
