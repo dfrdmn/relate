@@ -46,9 +46,9 @@
           <span class="sensitive">
             {{ participation.user.get_full_name }}
           </span>
-            {% if participation|has_permission:"view_gradebook" %}
+            {% comment %}{% if participation|has_permission:"view_gradebook" %}
               ({{ participation.get_role_desc }})
-            {% endif %}
+            {% endif %}{% endcomment %}
         </td>
         {% endif %}
         {% for grade_info in grades reversed %}
