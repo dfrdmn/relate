@@ -598,7 +598,7 @@ def add_default_roles_and_permissions(course,
 
         rpm(role=role, permission=pp.reopen_flow_session).save()
         # rpm(role=role, permission=pp.grant_exception).save()
-        rpm(role=role, permission=pp.view_analytics).save()
+        # rpm(role=role, permission=pp.view_analytics).save()
 
         # rpm(role=role, permission=pp.preview_content).save()
         # rpm(role=role, permission=pp.use_markup_sandbox).save()
