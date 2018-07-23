@@ -25,3 +25,4 @@ git-roots
 # IDEs, etc.
 *.sublime-project
 *.sublime-workspace
+*.vscode
